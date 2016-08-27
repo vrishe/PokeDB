@@ -1,0 +1,44 @@
+## Enable automatic line ending management
+
+* text=auto
+
+
+## Define the files that are known to be 'text'
+
+ .gitattributes text
+ .gitignore 	text
+
+*.gradle		text
+*.properties	text
+
+*.aidl			text
+*.cs			text diff=csharp
+*.java			text diff=java
+
+*.json			text
+*.xml			text
+
+*.md			text
+*.pro 			text
+*.txt 			text
+
+
+## Define the files that are known to be 'binary'
+
+*.aar			binary
+*.db			binary
+*.dll			binary
+*.jar			binary
+*.lib			binary
+*.so			binary
+*.tar			binary
+*.zip			binary
+
+*.bmp			binary
+*.gif			binary
+*.jpg			binary
+*.png			binary
+*.webm			binary
+
+*.otf			binary
+*.ttf			binary
