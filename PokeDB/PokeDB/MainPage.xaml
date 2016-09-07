@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:PokeDB"
              x:Class="PokeDB.MainPage">
 
-  <Label Text="Welcome to Xamarin Forms!"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
+
+  <Label x:Name="GreetingLabel" HorizontalOptions="Center" VerticalOptions="Center" />
 
 </ContentPage>

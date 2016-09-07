@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PokeDB;assembly=PokeDB"
              x:Class="PokeDB.App">
+  
   <Application.Resources>
 
-    <!-- Application resource dictionary -->
+    <ResourceDictionary>
+      <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="VisualElement.BackgroundColor" Value="{x:Static local:Palette.PageBackground}"/>
+      </Style>
+    </ResourceDictionary>
 
   </Application.Resources>
 </Application>

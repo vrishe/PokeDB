@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PokeDB.Resources;
 using Xamarin.Forms;
 
 namespace PokeDB
@@ -12,6 +9,19 @@ namespace PokeDB
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            var count = 0;
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                GreetingLabel.Text = string.Format(Strings.GreetingTextFormat, count++);
+
+                return IsVisible;
+            });
         }
     }
 }

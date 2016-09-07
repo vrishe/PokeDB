@@ -10,8 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PokeDB</RootNamespace>
     <AssemblyName>PokeDB</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile44</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <NuGetPackageImportStamp>
@@ -38,10 +38,28 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameData\PokemonIdToImageUrlConverter.cs" />
+    <Compile Include="Infrastructure\IDBConnectionProvider.cs" />
+    <Compile Include="Infrastructure\IPlatform.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameData\Pokemon.cs" />
+    <Compile Include="GameData\PokeType.cs" />
+    <Compile Include="GameData\Type.cs" />
+    <Compile Include="Palette.cs" />
+    <Compile Include="PokemonSearch\PokemonSearchPage.xaml.cs">
+      <DependentUpon>PokemonSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PokemonSearch\PokemonSearchPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GameData\Repository.cs" />
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemoteImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainPage.xaml">
@@ -52,33 +70,230 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon1.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon10.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon100.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon101.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon102.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon103.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon104.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon105.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon106.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon107.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon108.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon109.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon11.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon110.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon111.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon112.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon113.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon114.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon115.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon116.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon117.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon118.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon119.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon12.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon120.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon121.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon122.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon123.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon124.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon125.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon126.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon127.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon128.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon129.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon13.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon130.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon131.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon132.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon133.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon134.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon135.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon136.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon137.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon138.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon139.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon14.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon140.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon141.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon142.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon143.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon144.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon145.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon146.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon147.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon148.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon149.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon15.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon150.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon151.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon16.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon17.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon18.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon19.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon2.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon20.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon21.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon22.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon23.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon24.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon25.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon26.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon27.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon28.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon29.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon3.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon30.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon31.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon32.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon33.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon34.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon35.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon36.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon37.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon38.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon39.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon4.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon40.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon41.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon42.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon43.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon44.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon45.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon46.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon47.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon48.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon49.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon5.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon50.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon51.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon52.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon53.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon54.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon55.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon56.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon57.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon58.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon59.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon6.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon60.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon61.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon62.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon63.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon64.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon65.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon66.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon67.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon68.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon69.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon7.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon70.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon71.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon72.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon73.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon74.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon75.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon76.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon77.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon78.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon79.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon8.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon80.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon81.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon82.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon83.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon84.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon85.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon86.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon87.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon88.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon89.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon9.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon90.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon91.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon92.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon93.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon94.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon95.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon96.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon97.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon98.png" />
+    <EmbeddedResource Include="GameData\Images\Pokemon\pogo_icon99.png" />
+    <Content Include="FodyWeavers.xml" />
+    <EmbeddedResource Include="GameData\game_data.db" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FreshIOC, Version=1.0.6071.17008, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshIOC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FreshMvvm, Version=1.0.6071.17008, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshMvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCLExt.FileStorage, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PCLExt.FileStorage.1.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.FileStorage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCLExt.FileStorage.Abstractions, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PCLExt.FileStorage.1.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.FileStorage.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=1.51.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PropertyChanged.Fody.1.51.3\lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SQLite.Net, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLite.Net-PCL.3.1.1\lib\portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1\SQLite.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLiteNetExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLiteNetExtensions.1.3.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.0.0.6482\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.1.114\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.0.0.6482\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.1.114\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.0.0.6482\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.1.114\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
-    <None Include="packages.config" />
+    <EmbeddedResource Include="PokemonSearch\PokemonSearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <Import Project="..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.0.0.6482\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
