@@ -149,6 +149,7 @@
       <Link>IOExtensions.cs</Link>
     </Compile>
     <Compile Include="AndroidExtensions.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Rendering\View\RemoteImageRenderer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

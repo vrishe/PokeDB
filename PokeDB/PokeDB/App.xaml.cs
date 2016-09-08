@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using PCLExt.FileStorage;
 using PokeDB.Infrastructure;
@@ -48,6 +46,20 @@ namespace PokeDB
             }
             MainPage = new FreshMvvm.FreshNavigationContainer(
                 FreshMvvm.FreshPageModelResolver.ResolvePageModel<PokemonSearch.PokemonSearchPageModel>());
+        }
+
+
+        bool prepared;
+
+        void Prepare()
+        {
+            if (!prepared)
+            {
+                PrepareFirstChance();
+                PrepareLastChance();
+
+                prepared = true;
+            }
         }
 
 
@@ -128,8 +140,7 @@ namespace PokeDB
 
         protected override void OnStart()
         {
-            PrepareFirstChance();
-            PrepareLastChance();
+            Prepare();
         }
 
         protected override void OnSleep()

@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:PokeDB"
              x:Class="PokeDB.MainPage">
 
-
   <Label x:Name="GreetingLabel" HorizontalOptions="Center" VerticalOptions="Center" />
 
 </ContentPage>

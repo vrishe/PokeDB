@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -17,19 +19,49 @@ namespace PokeDB.Droid
         }
 
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        CancellationTokenSource cts;
+
+        Task PerformLaunch(CancellationToken token)
+        {
+            // TODO: Execute something useful here.
+            return Task.Delay(500, token);
+        }
+
+        void ProceedFurther()
+        {
+            var startIntent = new Intent(this, typeof(MainActivity));
+            {
+                startIntent.AddFlags(ActivityFlags.NoAnimation);
+            }
+            StartActivity(startIntent);
+            Finish();
+        }
+
+
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            Application.MainHandler.PostDelayed(() =>
+            cts?.Cancel();
+            cts = new CancellationTokenSource();
+
+            try
             {
-                var startIntent = new Intent(this, typeof(MainActivity));
-                {
-                    startIntent.AddFlags(ActivityFlags.NoAnimation);
-                }
-                StartActivity(startIntent);
-                Finish();
-            }, 1250);
+                await PerformLaunch(cts.Token);
+
+                ProceedFurther();
+            }
+            catch (TaskCanceledException)
+            {
+                /* Nothing to do */
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            cts.Cancel();
+
+            base.OnDestroy();
         }
 
         public override void OnBackPressed()

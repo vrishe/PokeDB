@@ -3,28 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:gamedata="clr-namespace:PokeDB.GameData;assembly=PokeDB"
              xmlns:views="clr-namespace:PokeDB.Views;assembly=PokeDB"
-             x:Class="PokeDB.PokemonSearch.PokemonSearchPage">
+             x:Class="PokeDB.PokemonSearch.PokemonSearchPage"
+             
+             SearchCommand="{Binding SearchCommand}">
 
   <ContentPage.Resources>
     <ResourceDictionary>
       <gamedata:PokemonIdToImageUrlConverter x:Key="PokemonToImageUrlConverter"/>
     </ResourceDictionary>
   </ContentPage.Resources>
-  
-  <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}">
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout Orientation="Horizontal" Padding="6">
-            <views:RemoteImage ImageUrl="{Binding Id, Converter={StaticResource PokemonToImageUrlConverter}}" WidthRequest="36" HeightRequest="36" />
-            <Label Text="{Binding Name}"
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="Start"
-                   FontSize="16"/>
-          </StackLayout>
-        </ViewCell>        
-      </DataTemplate>
-    </ListView.ItemTemplate>
-  </ListView>
+
+  <StackLayout Orientation="Vertical">
+    <SearchBar x:Name="Search" HorizontalOptions="FillAndExpand"/>
+    
+    <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Horizontal" Padding="6">
+              <views:RemoteImage ImageUrl="{Binding Id, Converter={StaticResource PokemonToImageUrlConverter}}" WidthRequest="36" HeightRequest="36" />
+              <Label Text="{Binding Name}"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Start"
+                     FontSize="16"/>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
   
 </ContentPage>

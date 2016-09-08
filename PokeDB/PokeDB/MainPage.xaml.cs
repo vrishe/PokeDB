@@ -11,17 +11,30 @@ namespace PokeDB
             InitializeComponent();
         }
 
+
+        public int CountSeconds { get; private set; }
+
+
+        bool appeared;
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
-            var count = 0;
+            appeared = true;
+
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                GreetingLabel.Text = string.Format(Strings.GreetingTextFormat, count++);
+                GreetingLabel.Text = string.Format(
+                    Strings.GreetingTextFormat, CountSeconds++);
 
-                return IsVisible;
+                return appeared;
             });
+        }
+
+        protected override void OnDisappearing()
+        {
+            appeared = false;
+            base.OnDisappearing();
         }
     }
 }
