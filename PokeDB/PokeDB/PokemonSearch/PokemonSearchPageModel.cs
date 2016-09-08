@@ -1,18 +1,18 @@
-﻿using PokeDB.GameData;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using FreshMvvm;
-using PropertyChanged;
-using PokeDB.Infrastructure;
 using System.Windows.Input;
+using FreshMvvm;
+using PokeDB.GameData;
+using PokeDB.Infrastructure;
+using PropertyChanged;
 
 namespace PokeDB.PokemonSearch
 {
     [ImplementPropertyChanged]
     class PokemonSearchPageModel : FreshBasePageModel
     {
-        public IEnumerable<Pokemon> Pokemon { get; private set; }
+        public IEnumerable<PokemonSearchItemCellViewModel> Pokemon { get; private set; }
 
 
         ICommand mSearchCommand;
@@ -30,33 +30,33 @@ namespace PokeDB.PokemonSearch
         void SearchCommandBody(string query)
         {
             Search(query);
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(PokemonSearchPageModel)}: Searching for '{query}' ...");
         }
 
         bool SearchCommandPredicate(string query)
         {
-            return pokemonSource != null && pokemonSource.Count > 0;
+            return itemsSource != null && itemsSource.Count() > 0;
         }
 
 
+        IPlatform platform;
         IRepository gameData;
 
-        public PokemonSearchPageModel(IRepository gameData)
+        public PokemonSearchPageModel(IPlatform platform, IRepository gameData)
         {
+            this.platform = platform;
             this.gameData = gameData;
         }
 
 
-        IList<Pokemon> pokemonSource;
+        IEnumerable<PokemonSearchItemCellViewModel> itemsSource;
 
         async void Search(string query)
         {
             Pokemon = await Task.Run(() => (
 
-                from pokemon in pokemonSource
-                where SearchFilter(pokemon, query)
-                select pokemon
+                from item in itemsSource
+                where SearchFilter(item.Pokemon, query)
+                select item
 
             ).ToList());
         }
@@ -65,8 +65,10 @@ namespace PokeDB.PokemonSearch
         {
             var token = query?.FirstOrDefault();
 
-            return string.IsNullOrEmpty(token) 
-                || pokemon.Name.StartsWith(token);
+            return string.IsNullOrEmpty(token)
+                || token.Length >= 3 && pokemon.Types.Any(
+                    type => token.StartsWith(type.Name, System.StringComparison.OrdinalIgnoreCase))
+                || pokemon.Name.StartsWith(token, System.StringComparison.OrdinalIgnoreCase);
         }
 
 
@@ -74,9 +76,18 @@ namespace PokeDB.PokemonSearch
         {
             base.Init(initData);
 
-            pokemonSource = await Task.Run(() => gameData.LoadPokemon());
+            itemsSource = await Task.Run(() => AsCells(gameData.LoadPokemon()));
 
             Search(null);
+        }
+
+        IEnumerable<PokemonSearchItemCellViewModel> AsCells(IEnumerable<Pokemon> pokemons)
+        {
+            return pokemons.Select(
+                pokemon => new PokemonSearchItemCellViewModel(platform)
+                {
+                    Pokemon = pokemon
+                });
         }
     }
 }

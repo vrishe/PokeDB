@@ -38,15 +38,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameData\PokemonIdToImageUrlConverter.cs" />
     <Compile Include="Infrastructure\IDBConnectionProvider.cs" />
     <Compile Include="Infrastructure\IPlatform.cs" />
-    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="PokemonSearch\PokemonSearchItemCellViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameData\Pokemon.cs" />
-    <Compile Include="GameData\PokeType.cs" />
+    <Compile Include="GameData\Internal\_PokeType.cs" />
     <Compile Include="GameData\Type.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="PokemonSearch\PokemonSearchPage.xaml.cs">

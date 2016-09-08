@@ -24,7 +24,7 @@ namespace PokeDB.PokemonSearch
                 {
                     var page = (PokemonSearchPage)bindable;
                     var command = (ICommand)valueOld;
-
+                    
                     if (command != null)
                     {
                         command.CanExecuteChanged -= page.OnSearchCommandCanExecuteChanged;

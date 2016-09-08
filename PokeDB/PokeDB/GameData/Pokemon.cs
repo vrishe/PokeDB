@@ -1,6 +1,7 @@
 ﻿using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace PokeDB.GameData
 {
@@ -8,7 +9,7 @@ namespace PokeDB.GameData
     public sealed class Pokemon
     {
         [Column("ID"), PrimaryKey]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         [Column("NAME")]
         public string Name { get; private set; }
 
@@ -21,7 +22,7 @@ namespace PokeDB.GameData
         public double Stamina { get; private set; }
 
 
-        [ManyToMany(typeof(PokeType))]
-        public IReadOnlyList<Type> Types { get; private set; }
+        [ManyToMany(typeof(Internal._PokeType), ReadOnly = true)]
+        public Type[] Types { get; set; }
     }
 }

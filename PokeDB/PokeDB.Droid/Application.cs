@@ -6,6 +6,7 @@ using PCLExt.FileStorage;
 using PokeDB.Infrastructure;
 using PokeDB.Insfrastructure;
 using SQLite.Net;
+using SQLite.Net.Interop;
 
 namespace PokeDB.Droid
 {
@@ -57,17 +58,12 @@ namespace PokeDB.Droid
         }
 
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
-
         #region IDBConnectionProvider implementation
 
-        SQLiteConnection IDBConnectionProvider.EstablishDBConnection(string path)
+        SQLiteConnection IDBConnectionProvider.EstablishDBConnection(string path, bool readOnly)
         {
-            return new SQLiteConnection(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(), path);
+            return new SQLiteConnection(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(), path, 
+                readOnly ? SQLiteOpenFlags.ReadOnly : SQLiteOpenFlags.ReadWrite);
         }
 
         #endregion // IDBConnectionProvider implementation

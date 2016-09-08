@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Linq;
 
-namespace PokeDB.Infrastructure
+namespace PokeDB
 {
     public class RelayCommand<T> : ICommand
     {
@@ -48,10 +48,8 @@ namespace PokeDB.Infrastructure
             }
             catch (InvalidCastException e)
             {
-                throw new Exception(string.Format(
-                    "This command expects parameter of type {0}, but {1} is given.",
-                    typeof(T), parameter != null ? parameter.GetType().ToString() : "null"
-                ), e);
+                throw new Exception("This command expects parameter of type " 
+                    + $"{typeof(T)}, but {parameter?.GetType().ToString()} is given.", e);
             }
         }
 

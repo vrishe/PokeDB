@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>PokeDB.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>PokeDB.iOS</AssemblyName>
+    <AssemblyName>PokeDBiOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

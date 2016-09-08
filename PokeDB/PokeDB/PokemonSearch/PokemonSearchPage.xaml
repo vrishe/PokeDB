@@ -9,28 +9,37 @@
 
   <ContentPage.Resources>
     <ResourceDictionary>
-      <gamedata:PokemonIdToImageUrlConverter x:Key="PokemonToImageUrlConverter"/>
+      <!--<gamedata:PokemonIdToImageUrlConverter x:Key="PokemonToImageUrlConverter"/>-->
     </ResourceDictionary>
   </ContentPage.Resources>
 
   <StackLayout Orientation="Vertical">
     <SearchBar x:Name="Search" HorizontalOptions="FillAndExpand"/>
-    
-    <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}">
+
+    <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="48">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <StackLayout Orientation="Horizontal" Padding="6">
-              <views:RemoteImage ImageUrl="{Binding Id, Converter={StaticResource PokemonToImageUrlConverter}}" WidthRequest="36" HeightRequest="36" />
-              <Label Text="{Binding Name}"
-                     HorizontalOptions="FillAndExpand"
-                     VerticalOptions="Start"
-                     FontSize="16"/>
+              <views:RemoteImage ImageUrl="{Binding Icon}"
+                                 WidthRequest="36"
+                                 HeightRequest="36" />
+
+              <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="FillAndExpand">
+                <Label Text="{Binding Name}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       FontSize="16"/>
+                <Label Text="{Binding Type}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="End"
+                       FontSize="11.5"/>
+              </StackLayout>
             </StackLayout>
           </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
   </StackLayout>
-  
+
 </ContentPage>

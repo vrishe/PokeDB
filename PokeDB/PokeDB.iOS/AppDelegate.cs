@@ -7,6 +7,7 @@ using PCLExt.FileStorage;
 using PokeDB.Infrastructure;
 using PokeDB.Insfrastructure;
 using SQLite.Net;
+using SQLite.Net.Interop;
 using UIKit;
 
 namespace PokeDB.iOS
@@ -69,9 +70,10 @@ namespace PokeDB.iOS
 
         #region IDBConnectionProvider implementation
 
-        SQLiteConnection IDBConnectionProvider.EstablishDBConnection(string path)
+        SQLiteConnection IDBConnectionProvider.EstablishDBConnection(string path, bool readOnly)
         {
-            return new SQLiteConnection(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(), path);
+            return new SQLiteConnection(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(), path,
+                readOnly ? SQLiteOpenFlags.ReadOnly : SQLiteOpenFlags.ReadWrite););
         }
 
         #endregion // IDBConnectionProvider implementation

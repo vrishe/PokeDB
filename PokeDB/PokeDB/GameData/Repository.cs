@@ -56,7 +56,7 @@ namespace PokeDB.GameData
                 throw new Exception($"{nameof(IRepository)} is initialized already.");
             }
 #endif // DEBUG
-            mConnection = provider.EstablishDBConnection(path);
+            mConnection = provider.EstablishDBConnection(path, true);
         }
 
         public IList<Pokemon> LoadPokemon()

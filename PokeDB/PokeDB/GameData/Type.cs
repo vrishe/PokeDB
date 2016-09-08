@@ -1,4 +1,6 @@
-﻿using SQLite.Net.Attributes;
+﻿using System.Collections.Generic;
+using SQLite.Net.Attributes;
+using SQLiteNetExtensions.Attributes;
 
 namespace PokeDB.GameData
 {
@@ -6,8 +8,8 @@ namespace PokeDB.GameData
     public class Type
     {
         [Column("ID"), PrimaryKey]
-        int Id { get; }
+        public int Id { get; set; }
         [Column("NAME")]
-        int Tag { get; }
+        public string Name { get; private set; }
     }
 }
