@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FreshMvvm;
@@ -48,29 +50,20 @@ namespace PokeDB.PokemonSearch
         }
 
 
-        IEnumerable<PokemonSearchItemCellViewModel> itemsSource;
+        readonly PokemonMatcher matcher = new PokemonMatcher();
 
         async void Search(string query)
         {
-            Pokemon = await Task.Run(() => (
+            Pokemon = await Task.Run(() =>
+            {
+                var match = matcher.Match(query ?? string.Empty);
 
-                from item in itemsSource
-                where SearchFilter(item.Pokemon, query)
-                select item
-
-            ).ToList());
+                return itemsSource.Where(item => match(item.Pokemon)).ToList();
+            });
         }
 
-        static bool SearchFilter(Pokemon pokemon, params string[] query)
-        {
-            var token = query?.FirstOrDefault();
 
-            return string.IsNullOrEmpty(token)
-                || token.Length >= 3 && pokemon.Types.Any(
-                    type => token.StartsWith(type.Name, System.StringComparison.OrdinalIgnoreCase))
-                || pokemon.Name.StartsWith(token, System.StringComparison.OrdinalIgnoreCase);
-        }
-
+        IEnumerable<PokemonSearchItemCellViewModel> itemsSource;
 
         public override async void Init(object initData)
         {

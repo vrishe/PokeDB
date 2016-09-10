@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="Infrastructure\IDBConnectionProvider.cs" />
     <Compile Include="Infrastructure\IPlatform.cs" />
+    <Compile Include="PokemonSearch\PokemonMatcher.cs" />
     <Compile Include="PokemonSearch\PokemonSearchItemCellViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
