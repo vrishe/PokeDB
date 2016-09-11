@@ -29,6 +29,7 @@ namespace PokeDB
         {
             SetIoC();
 
+            EnumerateResources();
             MainPage = new MainPage
             {
                 BindingContext = this
@@ -50,6 +51,17 @@ namespace PokeDB
                 FreshMvvm.FreshPageModelResolver.ResolvePageModel<PokemonSearch.PokemonSearchPageModel>());
         }
 
+        [System.Diagnostics.Conditional("DEBUG")]
+        void EnumerateResources()
+        {
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            }
+        }
+
 
         bool prepared;
 
@@ -67,8 +79,10 @@ namespace PokeDB
 
         async Task CheckResourcesAsync()
         {
-            var assetsFolder = await Platform.ApplicationDataFolder.CreateFolderAsync("GameData", CreationCollisionOption.OpenIfExists);
-            var indexFile = await assetsFolder.CreateFileAsync(".index", CreationCollisionOption.OpenIfExists);
+            var assetsFolder = await Platform.ApplicationDataFolder.CreateFolderAsync("GameData", CreationCollisionOption.OpenIfExists)
+                .ConfigureAwait(continueOnCapturedContext: false);
+            var indexFile = await assetsFolder.CreateFileAsync(".index", CreationCollisionOption.OpenIfExists)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             var revisionList = new List<string>();
             using (var index = await indexFile.OpenAsync(FileAccess.ReadAndWrite))
@@ -108,16 +122,13 @@ namespace PokeDB
 
                 foreach (var item in revisionList)
                 {
-                    await Task.Run(() =>
-                    {
-                        var resourceId = PortablePath.Combine(resourcePathBase, item)
-                            .Replace(PortablePath.DirectorySeparatorChar, '.');
+                    var resourceId = PortablePath.Combine(resourcePathBase, item)
+                        .Replace(PortablePath.DirectorySeparatorChar, '.');
 
-                        using (var resource = assembly.GetManifestResourceStream(resourceId))
-                        {
-                            Platform.WriteStream(resource, PortablePath.Combine(assetsFolder.Path, item));
-                        }
-                    });
+                    using (var resource = assembly.GetManifestResourceStream(resourceId))
+                    {
+                        Platform.WriteStream(resource, PortablePath.Combine(assetsFolder.Path, item));
+                    }
                 }
                 using (var indexWriter = new System.IO.StreamWriter(index))
                 {

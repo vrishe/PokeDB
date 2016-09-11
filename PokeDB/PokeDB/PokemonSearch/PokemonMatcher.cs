@@ -175,8 +175,6 @@ namespace PokeDB.PokemonSearch
                 {
                     var token = query[i + j];
 
-                    DebugLog(() => $"{nameof(TypeMatcher)}: - picked {token}");
-
                     if (!pokemon.Types[j].Name
                         .Equals(token, StringComparison.OrdinalIgnoreCase))
                     {
@@ -184,7 +182,7 @@ namespace PokeDB.PokemonSearch
 
                         return false;
                     }
-                    DebugLog(() => $"{nameof(TypeMatcher)}: - {token} OK");
+                    DebugLog(() => $"{nameof(TypeMatcher)}: - picked {token} OK");
                 }
                 i += jmax;
 

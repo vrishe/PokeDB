@@ -1,5 +1,6 @@
 ﻿using System;
-using PokeDB.Resources;
+using System.Linq;
+using System.Reflection;
 using Xamarin.Forms;
 
 namespace PokeDB
@@ -22,10 +23,10 @@ namespace PokeDB
             base.OnAppearing();
             appeared = true;
 
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            ReplaceSplash();
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
-                GreetingLabel.Text = string.Format(
-                    Strings.GreetingTextFormat, CountSeconds++);
+                ReplaceSplash();
 
                 return appeared;
             });
@@ -35,6 +36,30 @@ namespace PokeDB
         {
             appeared = false;
             base.OnDisappearing();
+        }
+
+
+        int currentSplashIndex = -1;
+
+        readonly Random random = new Random(Environment.TickCount);
+
+        void ReplaceSplash()
+        {
+            var available = Enumerable.Range(0, 3)
+                .Where(i => i != currentSplashIndex)
+                .ToArray();
+
+            currentSplashIndex = available[random.Next(available.Length)];
+
+            var splashIndex = currentSplashIndex;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                var typeInfo = typeof(MainPage).GetTypeInfo();
+
+                ArtImage.Source = ImageSource.FromResource(
+                    $"{typeInfo.Namespace}.Resources.Splash.splash_variant_{(char)('a' + splashIndex)}.jpg", 
+                    typeInfo.Assembly);
+            });
         }
     }
 }
