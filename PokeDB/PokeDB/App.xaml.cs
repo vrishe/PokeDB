@@ -81,8 +81,7 @@ namespace PokeDB
         {
             var assetsFolder = await Platform.ApplicationDataFolder.CreateFolderAsync("GameData", CreationCollisionOption.OpenIfExists)
                 .ConfigureAwait(continueOnCapturedContext: false);
-            var indexFile = await assetsFolder.CreateFileAsync(".index", CreationCollisionOption.OpenIfExists)
-                .ConfigureAwait(continueOnCapturedContext: false);
+            var indexFile = await assetsFolder.CreateFileAsync(".index", CreationCollisionOption.OpenIfExists);
 
             var revisionList = new List<string>();
             using (var index = await indexFile.OpenAsync(FileAccess.ReadAndWrite))
@@ -120,20 +119,17 @@ namespace PokeDB
                 var assembly = typeof(App).GetTypeInfo().Assembly;
                 var resourcePathBase = PortablePath.Combine(typeof(App).Namespace, assetsFolder.Name);
 
-                foreach (var item in revisionList)
-                {
-                    var resourceId = PortablePath.Combine(resourcePathBase, item)
-                        .Replace(PortablePath.DirectorySeparatorChar, '.');
-
-                    using (var resource = assembly.GetManifestResourceStream(resourceId))
-                    {
-                        Platform.WriteStream(resource, PortablePath.Combine(assetsFolder.Path, item));
-                    }
-                }
                 using (var indexWriter = new System.IO.StreamWriter(index))
                 {
                     foreach (var item in revisionList)
                     {
+                        var resourceId = PortablePath.Combine(resourcePathBase, item)
+                            .Replace(PortablePath.DirectorySeparatorChar, '.');
+
+                        using (var resource = assembly.GetManifestResourceStream(resourceId))
+                        {
+                            Platform.WriteStream(resource, PortablePath.Combine(assetsFolder.Path, item));
+                        }
                         await indexWriter.WriteLineAsync(item);
                     }
                 }

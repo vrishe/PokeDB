@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using PokeDB.GameData;
 using PokeDB.Infrastructure;
 using PropertyChanged;
@@ -20,19 +21,25 @@ namespace PokeDB.PokemonSearch
         public string Name { get { return Pokemon?.Name; } }
 
         [DependsOn(nameof(Pokemon))]
-        public string Icon { get { return GetIconCached(); } }
+        public Uri Icon { get { return GetIconCached(); } }
 
         [DependsOn(nameof(Pokemon))]
         public string Type { get { return GetTypeCached(); } }
 
 
-        string mIcon;
+        Uri mIcon;
 
-        string GetIconCached()
+        Uri GetIconCached()
         {
             if (mIcon == null && Pokemon != null)
             {
-                mIcon = $"file:///{platform.ApplicationDataFolder.Path}/GameData/Images/Pokemon/pogo_icon{Pokemon.Id}.png";
+                var builder = new UriBuilder
+                {
+                    Scheme = "file",
+                    Host = platform.ApplicationDataFolder.Path,
+                    Path = $"GameData/Images/Pokemon/pogo_icon{Pokemon.Id}.png"
+                };
+                mIcon = builder.Uri;
             }
             return mIcon;
         }
