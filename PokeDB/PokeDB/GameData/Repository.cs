@@ -2,9 +2,7 @@
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
 using PokeDB.Infrastructure;
-using System.Threading.Tasks;
 
 namespace PokeDB.GameData
 {
@@ -14,6 +12,8 @@ namespace PokeDB.GameData
 
 
         IList<Pokemon> LoadPokemon();
+
+        IList<Pokemon> LoadEvolutionFor(Pokemon pokemon);
     }
 
     public sealed class Repository : IRepository
@@ -62,6 +62,18 @@ namespace PokeDB.GameData
         public IList<Pokemon> LoadPokemon()
         {
             return Connection.GetAllWithChildren<Pokemon>();
+        }
+
+        public IList<Pokemon> LoadEvolutionFor(Pokemon pokemon)
+        {
+            var result = Connection.Query<Pokemon>("SELECT POKEMON.* FROM EVOLUTION "
+                + "JOIN POKEMON ON POKEMON.ID == EVOLUTION_ID WHERE POKEMON_ID IS ?", pokemon.Id);
+
+            foreach (var item in result)
+            {
+                Connection.GetChildren(item);
+            }
+            return result;
         }
     }
 }

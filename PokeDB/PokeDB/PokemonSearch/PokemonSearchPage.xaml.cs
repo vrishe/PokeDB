@@ -19,7 +19,7 @@ namespace PokeDB.PokemonSearch
         }
 
         public static readonly BindableProperty SearchCommandProperty =
-            BindableProperty.Create("SearchCommand", typeof(ICommand), typeof(PokemonSearchPage), default(ICommand),
+            BindableProperty.Create(nameof(SearchCommand), typeof(ICommand), typeof(PokemonSearchPage), default(ICommand),
                 BindingMode.Default, null, (bindable, valueOld, valueNew) =>
                 {
                     var page = (PokemonSearchPage)bindable;
@@ -37,6 +37,21 @@ namespace PokeDB.PokemonSearch
                     }
                     page.OnSearchCommandCanExecuteChanged(bindable, EventArgs.Empty);
                 });
+
+        void OnSearchCommandCanExecuteChanged(object sender, EventArgs e)
+        {
+            Search.IsEnabled = SearchCommand?.CanExecute(Search.Text) ?? false;
+        }
+
+
+        public ICommand SelectCommand
+        {
+            get { return (ICommand)GetValue(SelectCommandProperty); }
+            set { SetValue(SelectCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty SelectCommandProperty =
+            BindableProperty.Create(nameof(SelectCommand), typeof(ICommand), typeof(PokemonSearchPage), default(ICommand));
 
 
         public PokemonSearchPage()
@@ -73,15 +88,13 @@ namespace PokeDB.PokemonSearch
             {
                 if (e.SelectedItem != null)
                 {
+                    if (SelectCommand?.CanExecute(e.SelectedItem) ?? false)
+                    {
+                        SelectCommand.Execute(e.SelectedItem);
+                    }
                     ((ListView)s).SelectedItem = null;
-                    // TODO: handle item selection here.
                 }
             };
-        }
-
-        void OnSearchCommandCanExecuteChanged(object sender, EventArgs e)
-        {
-            Search.IsEnabled = SearchCommand?.CanExecute(Search.Text) ?? false;
         }
     }
 }

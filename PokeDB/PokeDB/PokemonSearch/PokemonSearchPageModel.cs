@@ -8,6 +8,7 @@ using FreshMvvm;
 using PokeDB.GameData;
 using PokeDB.Infrastructure;
 using PropertyChanged;
+using Xamarin.Forms;
 
 namespace PokeDB.PokemonSearch
 {
@@ -25,7 +26,7 @@ namespace PokeDB.PokemonSearch
             get
             {
                 return mSearchCommand ?? (mSearchCommand = new RelayCommand<string>(
-                    SearchCommandBody, SearchCommandPredicate, this, "Pokemon"));
+                    SearchCommandBody, SearchCommandPredicate, this, nameof(Pokemon)));
             }
         }
 
@@ -37,6 +38,28 @@ namespace PokeDB.PokemonSearch
         bool SearchCommandPredicate(string query)
         {
             return itemsSource != null && itemsSource.Count() > 0;
+        }
+
+
+        ICommand mSelectCommand;
+
+        [DoNotNotify]
+        public ICommand SelectCommand
+        {
+            get
+            {
+                return mSelectCommand ?? (mSelectCommand = new Command<PokemonSearchItemCellViewModel>(SelectCommandBody));
+            }
+        }
+
+        void SelectCommandBody(PokemonSearchItemCellViewModel cell)
+        {
+            var evolution = gameData.LoadEvolutionFor(cell.Pokemon);
+
+            foreach (var monster in evolution)
+            {
+                System.Diagnostics.Debug.WriteLine(monster);
+            }
         }
 
 

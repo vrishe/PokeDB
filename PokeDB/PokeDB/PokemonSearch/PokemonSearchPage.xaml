@@ -5,13 +5,8 @@
              xmlns:views="clr-namespace:PokeDB.Views;assembly=PokeDB"
              x:Class="PokeDB.PokemonSearch.PokemonSearchPage"
              
-             SearchCommand="{Binding SearchCommand}">
-
-  <ContentPage.Resources>
-    <ResourceDictionary>
-      <!--<gamedata:PokemonIdToImageUrlConverter x:Key="PokemonToImageUrlConverter"/>-->
-    </ResourceDictionary>
-  </ContentPage.Resources>
+             SearchCommand="{Binding SearchCommand}"
+             SelectCommand="{Binding SelectCommand}">
 
   <StackLayout Orientation="Vertical">
     <SearchBar x:Name="Search" HorizontalOptions="FillAndExpand"/>
