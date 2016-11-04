@@ -7,7 +7,7 @@ using PropertyChanged;
 namespace PokeDB.PokemonSearch
 {
     [ImplementPropertyChanged]
-    class PokemonSearchItemCellViewModel
+    class FoundItemCellViewModel
     {
         public Pokemon Pokemon { get; set; }
 
@@ -66,7 +66,7 @@ namespace PokeDB.PokemonSearch
 
         readonly IPlatform platform;
 
-        public PokemonSearchItemCellViewModel(IPlatform platform)
+        public FoundItemCellViewModel(IPlatform platform)
         {
             this.platform = platform;
         }

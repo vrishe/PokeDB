@@ -48,7 +48,7 @@ namespace PokeDB
             //PokemonSearch.PokemonMatcher.EnableDebug();
 
             MainPage = new FreshMvvm.FreshNavigationContainer(
-                FreshMvvm.FreshPageModelResolver.ResolvePageModel<PokemonSearch.PokemonSearchPageModel>());
+                FreshMvvm.FreshPageModelResolver.ResolvePageModel<PokemonSearch.SearchPageModel>());
         }
 
         [System.Diagnostics.Conditional("DEBUG")]

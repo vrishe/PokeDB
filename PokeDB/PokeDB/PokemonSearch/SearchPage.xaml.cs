@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace PokeDB.PokemonSearch
 {
-    public partial class PokemonSearchPage : ContentPage
+    public partial class SearchPage : ContentPage
     {
         public ICommand SearchCommand
         {
@@ -19,27 +16,39 @@ namespace PokeDB.PokemonSearch
         }
 
         public static readonly BindableProperty SearchCommandProperty =
-            BindableProperty.Create("SearchCommand", typeof(ICommand), typeof(PokemonSearchPage), default(ICommand),
-                BindingMode.Default, null, (bindable, valueOld, valueNew) =>
-                {
-                    var page = (PokemonSearchPage)bindable;
-                    var command = (ICommand)valueOld;
-                    
-                    if (command != null)
-                    {
-                        command.CanExecuteChanged -= page.OnSearchCommandCanExecuteChanged;
-                    }
-                    command = (ICommand)valueNew;
+            BindableProperty.Create(nameof(SearchCommand), typeof(ICommand), typeof(SearchPage), default(ICommand),
+                BindingMode.Default, null, new BindingPropertyChangedDelegateProxy<SearchPage, ICommand>(OnSearchCommandChanged));
 
-                    if (command != null)
-                    {
-                        command.CanExecuteChanged += page.OnSearchCommandCanExecuteChanged;
-                    }
-                    page.OnSearchCommandCanExecuteChanged(bindable, EventArgs.Empty);
-                });
+        static void OnSearchCommandChanged(SearchPage page, ICommand commandOld, ICommand commandNew)
+        {
+            if (commandOld != null)
+            {
+                commandOld.CanExecuteChanged -= page.OnSearchCommandCanExecuteChanged;
+            }
+            if (commandNew != null)
+            {
+                commandNew.CanExecuteChanged += page.OnSearchCommandCanExecuteChanged;
+            }
+            page.OnSearchCommandCanExecuteChanged(page, EventArgs.Empty);
+        }
+
+        void OnSearchCommandCanExecuteChanged(object sender, EventArgs e)
+        {
+            Search.IsEnabled = SearchCommand?.CanExecute(Search.Text) ?? false;
+        }
 
 
-        public PokemonSearchPage()
+        public ICommand SelectCommand
+        {
+            get { return (ICommand)GetValue(SelectCommandProperty); }
+            set { SetValue(SelectCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty SelectCommandProperty =
+            BindableProperty.Create(nameof(SelectCommand), typeof(ICommand), typeof(SearchPage), default(ICommand));
+
+
+        public SearchPage()
         {
             InitializeComponent();
 
@@ -77,11 +86,6 @@ namespace PokeDB.PokemonSearch
                     // TODO: handle item selection here.
                 }
             };
-        }
-
-        void OnSearchCommandCanExecuteChanged(object sender, EventArgs e)
-        {
-            Search.IsEnabled = SearchCommand?.CanExecute(Search.Text) ?? false;
         }
     }
 }
