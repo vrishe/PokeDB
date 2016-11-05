@@ -52,6 +52,7 @@ namespace PokeDB.PokemonSearch
 
         void SelectCommandBody(FoundItemCellViewModel cell)
         {
+            CoreMethods.PushPageModel<PokemonEstimation.EstimationPageModel>(cell, true).Log();
         }
 
 

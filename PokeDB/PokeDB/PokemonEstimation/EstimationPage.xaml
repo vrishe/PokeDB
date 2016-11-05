@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:PokeDB.Views;assembly=PokeDB"
+             x:Class="PokeDB.PokemonEstimation.EstimationPage"
+             
+             Header="{Binding ItemFound}">
+  
+  <ScrollView>
+    <StackLayout Orientation="Vertical">
+      <!-- Header -->
+      <StackLayout x:Name="HeaderPanel" Orientation="Horizontal" Padding="6,6,6,0">
+        <views:RemoteImage ImageUrl="{Binding Icon}"
+                           WidthRequest="72"
+                           HeightRequest="72" />
+
+        <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="FillAndExpand">
+          <Label Text="{Binding Name}"
+                 HorizontalOptions="Start"
+                 VerticalOptions="Start"
+                 FontSize="16"/>
+          <Label Text="{Binding Type}"
+                 HorizontalOptions="Start"
+                 VerticalOptions="End"
+                 FontSize="11.5"/>
+        </StackLayout>
+      </StackLayout>
+      
+      <!-- Details Panel -->
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Base Stats -->
+        <Label Text="Base Stats" Grid.ColumnSpan="3"/>
+        
+        <Label Text="ATK: 000" Grid.Row="1"/>
+        <Label Text="DEF: 000" Grid.Row="1" Grid.Column="1"/>
+        <Label Text="STA: 000" Grid.Row="1" Grid.Column="2"/>
+
+        <!-- Evolution Chain -->
+        <Label Text="Evolution" Grid.Row="2" Grid.ColumnSpan="3"/>
+        
+        <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="48" Grid.Row="3" Grid.ColumnSpan="3">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal" Padding="6">
+                  <views:RemoteImage ImageUrl="{Binding Icon}"
+                                     WidthRequest="36"
+                                     HeightRequest="36" />
+
+                  <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="FillAndExpand">
+                    <Label Text="{Binding Name}"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Start"
+                           FontSize="16"/>
+                    <Label Text="{Binding Type}"
+                           HorizontalOptions="Start"
+                           VerticalOptions="End"
+                           FontSize="11.5"/>
+                  </StackLayout>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+        
+        <!-- Estimation -->
+        <Label Text="Estimation" Grid.Row="4" Grid.ColumnSpan="3"/>
+        
+        <Label Text="CP" Grid.Row="5"/>
+        <Label Text="HP" Grid.Row="5" Grid.Column="1"/>
+        <Label Text="DUST" Grid.Row="5" Grid.Column="2"/>
+
+        <Entry Text="10" Grid.Row="6"/>
+        <Entry Text="10" Grid.Row="6" Grid.Column="1"/>
+        <Entry Text="200" Grid.Row="6" Grid.Column="2"/>
+      </Grid>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
