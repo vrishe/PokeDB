@@ -7,7 +7,7 @@ using Android.OS;
 
 namespace PokeDB.Droid
 {
-    [Activity(Label = "PokeDB", Icon = "@drawable/icon", Theme = "@style/SplashTheme", MainLauncher = true, NoHistory = true, StateNotNeeded = true)]
+    [Activity(Label = "PokeDB", Icon = "@mipmap/icon", Theme = "@style/SplashTheme", MainLauncher = true, NoHistory = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, StateNotNeeded = true)]
     public class SplashActivity : Activity
     {
         public new Application Application

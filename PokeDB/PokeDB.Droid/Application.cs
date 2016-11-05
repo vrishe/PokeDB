@@ -10,7 +10,7 @@ using SQLite.Net.Interop;
 
 namespace PokeDB.Droid
 {
-    [Application(Icon = "@drawable/icon", HasCode = true)]
+    [Application(Icon = "@mipmap/icon", HasCode = true)]
     public class Application : global::Android.App.Application, IPlatform
     {
         /// <summary>
