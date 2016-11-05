@@ -82,8 +82,11 @@ namespace PokeDB.PokemonSearch
             {
                 if (e.SelectedItem != null)
                 {
+                    if (SelectCommand?.CanExecute(e.SelectedItem) ?? false)
+                    {
+                        SelectCommand.Execute(e.SelectedItem);
+                    }
                     ((ListView)s).SelectedItem = null;
-                    // TODO: handle item selection here.
                 }
             };
         }
