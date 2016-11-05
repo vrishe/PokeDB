@@ -38,8 +38,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BindingPropertyChangedDelegateProxy.cs" />
-    <Compile Include="ExecutionOutcome.cs" />
+    <Compile Include="Forms\BindingPropertyChangedDelegateProxy.cs" />
+    <Compile Include="Common\ExecutionOutcome.cs" />
+    <Compile Include="Forms\StringFormatOneWayConverter.cs" />
     <Compile Include="Infrastructure\IDBConnectionProvider.cs" />
     <Compile Include="Infrastructure\IPlatform.cs" />
     <Compile Include="PokemonEstimation\EstimationPage.xaml.cs">
@@ -49,7 +50,7 @@
     <Compile Include="PokemonEstimation\PokemonEstimator.cs" />
     <Compile Include="PokemonSearch\PokemonMatcher.cs" />
     <Compile Include="PokemonSearch\FoundItemCellViewModel.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="ComponentModel\RelayCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -68,8 +69,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="TaskExtensions.cs" />
-    <Compile Include="Views\RemoteImage.cs" />
+    <Compile Include="Diagnostics\DebugTaskExtensions.cs" />
+    <Compile Include="Forms\RemoteImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainPage.xaml">

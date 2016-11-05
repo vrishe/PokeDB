@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace PokeDB.Views
+namespace PokeDB.Forms
 {
     /// <summary>
     /// Remote image visual element.
@@ -9,7 +9,7 @@ namespace PokeDB.Views
     /// Provides a cached image viewer for remote images that can be targeted with URL.
     /// 
     /// </summary>
-    public class RemoteImage : View
+    public class RemoteImage : Xamarin.Forms.View
     {
         /// <summary>
         /// Gets or sets the image URL. This is a bindable property.

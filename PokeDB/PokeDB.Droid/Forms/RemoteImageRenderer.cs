@@ -1,22 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using PokeDB.Views;
+using PokeDB.Forms;
 using Square.Picasso;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(RemoteImage), typeof(PokeDB.Droid.Rendering.View.RemoteImageRenderer))]
+[assembly: ExportRenderer(typeof(RemoteImage), typeof(PokeDB.Droid.Forms.RemoteImageRenderer))]
 
-namespace PokeDB.Droid.Rendering.View
+namespace PokeDB.Droid.Forms
 {
     /// <summary>
     /// RemoteImage view renderer.

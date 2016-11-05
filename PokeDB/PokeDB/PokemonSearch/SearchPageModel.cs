@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FreshMvvm;
+using PokeDB.ComponentModel;
+using PokeDB.Diagnostics;
 using PokeDB.GameData;
 using PokeDB.Infrastructure;
 using PropertyChanged;
@@ -24,7 +26,7 @@ namespace PokeDB.PokemonSearch
             get
             {
                 return mSearchCommand ?? (mSearchCommand = new RelayCommand<string>(
-                    SearchCommandBody, SearchCommandPredicate, this, "Pokemon"));
+                    SearchCommandBody, SearchCommandPredicate, this, nameof(Pokemon)));
             }
         }
 

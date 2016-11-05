@@ -1,4 +1,4 @@
-﻿namespace PokeDB
+﻿namespace PokeDB.Common
 {
     enum ExecutionOutcome
     {

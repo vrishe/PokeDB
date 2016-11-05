@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Foundation;
-using PokeDB.Views;
+using PokeDB.Forms;
 using SDWebImage;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 
-[assembly: ExportRenderer(typeof(RemoteImage), typeof(PokeDB.iOS.Rendering.View.RemoteImageRenderer))]
+[assembly: ExportRenderer(typeof(RemoteImage), typeof(PokeDB.iOS.Forms.RemoteImageRenderer))]
 
-namespace PokeDB.iOS.Rendering.View
+namespace PokeDB.iOS.Forms
 {
     /// <summary>
     /// RemoteImage view renderer.

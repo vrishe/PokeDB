@@ -1,25 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:PokeDB.Views;assembly=PokeDB"
+             xmlns:local="clr-namespace:PokeDB.Forms;assembly=PokeDB"
              x:Class="PokeDB.PokemonEstimation.EstimationPage"
              
-             Header="{Binding ItemFound}">
+             Title="{Binding ItemFound.Name, Converter={StaticResource StringFormat}, ConverterParameter='Details: {0}'}">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:StringFormatOneWayConverter x:Key="StringFormat"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
   
   <ScrollView>
     <StackLayout Orientation="Vertical">
       <!-- Header -->
-      <StackLayout x:Name="HeaderPanel" Orientation="Horizontal" Padding="6,6,6,0">
-        <views:RemoteImage ImageUrl="{Binding Icon}"
+      <StackLayout Orientation="Horizontal" Padding="6,6,6,0">
+        <local:RemoteImage ImageUrl="{Binding ItemFound.Icon}"
                            WidthRequest="72"
                            HeightRequest="72" />
 
         <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="FillAndExpand">
-          <Label Text="{Binding Name}"
+          <Label Text="{Binding ItemFound.Name}"
                  HorizontalOptions="Start"
                  VerticalOptions="Start"
                  FontSize="16"/>
-          <Label Text="{Binding Type}"
+          <Label Text="{Binding ItemFound.Type}"
                  HorizontalOptions="Start"
                  VerticalOptions="End"
                  FontSize="11.5"/>
@@ -47,19 +53,19 @@
         <!-- Base Stats -->
         <Label Text="Base Stats" Grid.ColumnSpan="3"/>
         
-        <Label Text="ATK: 000" Grid.Row="1"/>
-        <Label Text="DEF: 000" Grid.Row="1" Grid.Column="1"/>
-        <Label Text="STA: 000" Grid.Row="1" Grid.Column="2"/>
+        <Label Text="{Binding ItemFound.Pokemon.Attack, Converter={StaticResource StringFormat}, ConverterParameter='ATK: {0:G3}'}" Grid.Row="1"/>
+        <Label Text="{Binding ItemFound.Pokemon.Defense, Converter={StaticResource StringFormat}, ConverterParameter='DEF: {0:G3}'}" Grid.Row="1" Grid.Column="1"/>
+        <Label Text="{Binding ItemFound.Pokemon.Stamina, Converter={StaticResource StringFormat}, ConverterParameter='STA: {0:G3}'}" Grid.Row="1" Grid.Column="2"/>
 
         <!-- Evolution Chain -->
         <Label Text="Evolution" Grid.Row="2" Grid.ColumnSpan="3"/>
         
-        <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="48" Grid.Row="3" Grid.ColumnSpan="3">
+        <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="48" VerticalOptions="Start" Grid.Row="3" Grid.ColumnSpan="3">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
                 <StackLayout Orientation="Horizontal" Padding="6">
-                  <views:RemoteImage ImageUrl="{Binding Icon}"
+                  <local:RemoteImage ImageUrl="{Binding Icon}"
                                      WidthRequest="36"
                                      HeightRequest="36" />
 

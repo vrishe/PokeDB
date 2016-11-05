@@ -12,6 +12,7 @@ namespace PokeDB.PokemonEstimation
     [ImplementPropertyChanged]
     class EstimationPageModel : FreshBasePageModel
     {
+        [DoNotNotify]
         public FoundItemCellViewModel ItemFound { get; private set; }
 
         public override void Init(object initData)

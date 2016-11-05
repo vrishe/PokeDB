@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Linq;
 
-namespace PokeDB
+namespace PokeDB.ComponentModel
 {
     public class RelayCommand<T> : ICommand
     {

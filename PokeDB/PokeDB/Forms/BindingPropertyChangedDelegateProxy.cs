@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace PokeDB
+namespace PokeDB.Forms
 {
     abstract class BindingPropertyChangedDelegateProxyBase
     {

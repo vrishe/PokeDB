@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using PokeDB.Common;
 
-namespace PokeDB
+namespace PokeDB.Diagnostics
 {
-    static class TaskExtensions
+    static class DebugTaskExtensions
     {
         public static Task<T> ContinueWithLog<T>(this Task<T> task, string taskName = null, ExecutionOutcome when = ExecutionOutcome.Anyway)
         {

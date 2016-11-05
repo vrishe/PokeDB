@@ -46,7 +46,7 @@ namespace PokeDB
                     .Prepare(PortablePath.Combine(Platform.ApplicationDataFolder.Path, "GameData", "game_data.db"));
             }
             //PokemonSearch.PokemonMatcher.EnableDebug();
-
+            
             MainPage = new FreshMvvm.FreshNavigationContainer(
                 FreshMvvm.FreshPageModelResolver.ResolvePageModel<PokemonSearch.SearchPageModel>());
         }
