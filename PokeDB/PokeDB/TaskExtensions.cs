@@ -60,19 +60,21 @@ namespace PokeDB
                     var onSuccess = onSuccessProvider(taskName);
 
                     return Tuple.Create(new Action<T>(t => {
-                        if (t.IsCompleted)
+                        switch (t.Status)
                         {
-                            onSuccess(t);
+                            case TaskStatus.RanToCompletion:
+                                onSuccess(t);
+                                break;
+
+                            case TaskStatus.Canceled:
+                                Debug.WriteLine($"Task {taskName} is canceled.");
+                                break;
+
+                            case TaskStatus.Faulted:
+                                Debug.WriteLine($"Task {taskName} is failed: {t.Exception}");
+                                break;
                         }
-                        if (t.IsCanceled)
-                        {
-                            Debug.WriteLine($"Task {taskName} is canceled.");
-                        }
-                        if (t.IsFaulted)
-                        {
-                            Debug.WriteLine($"Task {taskName} is failed: {t.Exception}");
-                        }
-                    }), TaskContinuationOptions.OnlyOnFaulted);
+                    }), TaskContinuationOptions.None);
             }
         }
 #endif // DEBUG
