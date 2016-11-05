@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:gamedata="clr-namespace:PokeDB.GameData;assembly=PokeDB"
              xmlns:views="clr-namespace:PokeDB.Views;assembly=PokeDB"
-             x:Class="PokeDB.PokemonSearch.PokemonSearchPage"
+             x:Class="PokeDB.PokemonSearch.SearchPage"
              
              SearchCommand="{Binding SearchCommand}"
              SelectCommand="{Binding SelectCommand}">
@@ -11,14 +10,14 @@
   <StackLayout Orientation="Vertical">
     <SearchBar x:Name="Search" HorizontalOptions="FillAndExpand"/>
 
-    <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="48">
+    <ListView x:Name="PokemonList" ItemsSource="{Binding Pokemon}" RowHeight="66">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <StackLayout Orientation="Horizontal" Padding="6">
               <views:RemoteImage ImageUrl="{Binding Icon}"
-                                 WidthRequest="36"
-                                 HeightRequest="36" />
+                                 WidthRequest="54"
+                                 HeightRequest="54" />
 
               <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="FillAndExpand">
                 <Label Text="{Binding Name}"

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FreshMvvm;
@@ -13,9 +11,9 @@ using Xamarin.Forms;
 namespace PokeDB.PokemonSearch
 {
     [ImplementPropertyChanged]
-    class PokemonSearchPageModel : FreshBasePageModel
+    class SearchPageModel : FreshBasePageModel
     {
-        public IEnumerable<PokemonSearchItemCellViewModel> Pokemon { get; private set; }
+        public IEnumerable<FoundItemCellViewModel> Pokemon { get; private set; }
 
 
         ICommand mSearchCommand;
@@ -26,7 +24,7 @@ namespace PokeDB.PokemonSearch
             get
             {
                 return mSearchCommand ?? (mSearchCommand = new RelayCommand<string>(
-                    SearchCommandBody, SearchCommandPredicate, this, nameof(Pokemon)));
+                    SearchCommandBody, SearchCommandPredicate, this, "Pokemon"));
             }
         }
 
@@ -48,25 +46,19 @@ namespace PokeDB.PokemonSearch
         {
             get
             {
-                return mSelectCommand ?? (mSelectCommand = new Command<PokemonSearchItemCellViewModel>(SelectCommandBody));
+                return mSelectCommand ?? (mSelectCommand = new Command<FoundItemCellViewModel>(SelectCommandBody));
             }
         }
 
-        void SelectCommandBody(PokemonSearchItemCellViewModel cell)
+        void SelectCommandBody(FoundItemCellViewModel cell)
         {
-            var evolution = gameData.LoadEvolutionFor(cell.Pokemon);
-
-            foreach (var monster in evolution)
-            {
-                System.Diagnostics.Debug.WriteLine(monster);
-            }
         }
 
 
         IPlatform platform;
         IRepository gameData;
 
-        public PokemonSearchPageModel(IPlatform platform, IRepository gameData)
+        public SearchPageModel(IPlatform platform, IRepository gameData)
         {
             this.platform = platform;
             this.gameData = gameData;
@@ -86,7 +78,7 @@ namespace PokeDB.PokemonSearch
         }
 
 
-        IEnumerable<PokemonSearchItemCellViewModel> itemsSource;
+        IEnumerable<FoundItemCellViewModel> itemsSource;
 
         public override async void Init(object initData)
         {
@@ -97,10 +89,10 @@ namespace PokeDB.PokemonSearch
             Search(null);
         }
 
-        IEnumerable<PokemonSearchItemCellViewModel> AsCells(IEnumerable<Pokemon> pokemons)
+        IEnumerable<FoundItemCellViewModel> AsCells(IEnumerable<Pokemon> pokemons)
         {
             return pokemons.Select(
-                pokemon => new PokemonSearchItemCellViewModel(platform)
+                pokemon => new FoundItemCellViewModel(platform)
                 {
                     Pokemon = pokemon
                 });
